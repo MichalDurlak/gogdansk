@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pl">
+    
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+
+<link rel="stylesheet" href="style.css">
+    <title>Go Gdansk</title>
+</head>
+<body>
+<center>
+    <h2> Aktualna pozycja komunikacji miejskiej w Gdańsku </h2>
+    
+
+
+</center>
+
+<p>
+    Line: <span id="line"></span> <br />
+    Speed: <span id="speed"></span> <br />
+    Lat: <span id="lat"></span> <br />
+    Lon: <span id="lon"></span> <br />
+    GPSQuality: <span id="gpsquality"></span> <br />
+</p>
+
+ <div id="gpsMap"></div>
+
+ <div id="licenseDownloadingData">
+     <br>
+     Ostatnia aktualizacja: <span id="dataAndTimeOfTime"></span>
+     <br>
+     Źródło danych: <a href = "http://www.ztm.gda.pl/otwarty_ztm">Zarząd Transportu Miejskiego w Gdańsku</a>
+ </div>
+
+ <div id="authorOfWebsite">
+
+      Stworzono przez: Michał Durlak 2021
+
+ </div>
+ 
+<script>
+
+const mymap = L.map('gpsMap').setView([54.3705, 18.6481], 12);
+// const marker = L.marker([54.3705, 18.6481]).addTo(mymap);
+var markers = L.layerGroup([]);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXhlbDA5IiwiYSI6ImNra3N5YWM2aTN1MHcydnF0cnBzZTFibDAifQ.lGv3Of7woAr35IlIVDKuIw', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'your.mapbox.access.token'
+}).addTo(mymap);
+
+
+
+
+var busIcon = L.icon({
+    iconUrl: 'models/bus.png',
+    iconSize: [25, 25],
+    // iconAnchor: [22, 94],
+    popupAnchor: [0, -15],
+    // shadowSize: [68, 95],
+    // shadowAnchor: [22, 94]
+});
+
+var tramIcon = L.icon({
+    iconUrl: 'models/tram.png',
+    iconSize: [25, 25],
+    // iconAnchor: [22, 94],
+    popupAnchor: [0, -15],
+    // shadowSize: [68, 95],
+    // shadowAnchor: [22, 94]
+});
+
+var busnightIcon = L.icon({
+    iconUrl: 'models/busnight.png',
+    iconSize: [30, 30],
+    // iconAnchor: [22, 94],
+    popupAnchor: [0, -15],
+    // shadowSize: [68, 95],
+    // shadowAnchor: [22, 94]
+});
+
+
+const gps_url = 'https://ckan2.multimediagdansk.pl/gpsPositions'
+
+
+async function getData(){
+    const response = await fetch(gps_url);
+    const data = await response.json();  
+    // console.log(data.LastUpdateData);
+    // console.log(data.Vehicles[2].Line);
+    document.getElementById("dataAndTimeOfTime").textContent = data.LastUpdateData;
+    
+
+
+var loopForCheckingData, count = 0;
+    for(loopForCheckingData in data.Vehicles) {        
+        if(data.Vehicles.hasOwnProperty(loopForCheckingData)) {
+            
+                      
+            
+            document.getElementById("line").textContent = data.Vehicles[loopForCheckingData].Line;
+            document.getElementById("speed").textContent = data.Vehicles[loopForCheckingData].Speed;
+            document.getElementById("lat").textContent = data.Vehicles[loopForCheckingData].Lat.toFixed(4);
+            document.getElementById("lon").textContent = data.Vehicles[loopForCheckingData].Lon.toFixed(4);
+            document.getElementById("gpsquality").textContent = data.Vehicles[loopForCheckingData].GPSQuality;
+            
+            // console.log(data.Vehicles[loopForCheckingData].Line);
+            // console.log(data.Vehicles[loopForCheckingData].Speed);
+            // console.log(data.Vehicles[loopForCheckingData].Lat);
+            // console.log(data.Vehicles[loopForCheckingData].Lon);
+            // console.log(data.Vehicles[loopForCheckingData].GPSQuality);
+            
+            
+            if (data.Vehicles[loopForCheckingData].Line > 106){
+                var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: busIcon});
+                marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
+
+            } else if (data.Vehicles[loopForCheckingData].Line < 13){
+
+                var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: tramIcon});
+            marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
+
+            } else {
+
+                var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: busnightIcon});
+                marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
+
+
+            }
+            
+            
+            markers.addLayer(marker);
+            
+            
+
+            
+            count++;
+        }
+        
+    }   
+
+    mymap.addLayer(markers);
+    
+}
+
+async function repeatFunction(){
+    markers.clearLayers();
+    getData();
+}
+
+
+
+getData();
+setInterval(repeatFunction,5000);
+
+</script>
+</body>
+</html>
+
+
+
+
+
+<!-- JSON jak zrobic petle
+https://stackoverflow.com/questions/6756104/get-size-of-json-object/6756305
+
+Praca z JSONEM
+https://www.youtube.com/watch?v=uxf0--uiX0I
+
+Wiele wierszy
+https://www.youtube.com/watch?v=118sDpLOClw&t=0s -->
