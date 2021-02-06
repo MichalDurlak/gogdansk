@@ -51,6 +51,7 @@
 const mymap = L.map('gpsMap').setView([54.3705, 18.6481], 12);
 // const marker = L.marker([54.3705, 18.6481]).addTo(mymap);
 var markers = L.layerGroup([]);
+var dataAndTimeLastData = null;
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXhlbDA5IiwiYSI6ImNra3N5YWM2aTN1MHcydnF0cnBzZTFibDAifQ.lGv3Of7woAr35IlIVDKuIw', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -101,10 +102,12 @@ async function getData(){
     // console.log(data.LastUpdateData);
     // console.log(data.Vehicles[2].Line);
     document.getElementById("dataAndTimeOfTime").textContent = data.LastUpdateData;
-    
 
+if (dataAndTimeLastData != data.LastUpdateData){
+    markers.clearLayers();
+    dataAndTimeLastData = data.LastUpdateData;
 
-var loopForCheckingData, count = 0;
+    var loopForCheckingData, count = 0;
     for(loopForCheckingData in data.Vehicles) {        
         if(data.Vehicles.hasOwnProperty(loopForCheckingData)) {
             
@@ -116,7 +119,7 @@ var loopForCheckingData, count = 0;
             document.getElementById("lon").textContent = data.Vehicles[loopForCheckingData].Lon.toFixed(4);
             document.getElementById("gpsquality").textContent = data.Vehicles[loopForCheckingData].GPSQuality;
             
-            console.log(data.Vehicles[loopForCheckingData].Line);
+            // console.log(data.Vehicles[loopForCheckingData].Line);
             // console.log(data.Vehicles[loopForCheckingData].Speed);
             // console.log(data.Vehicles[loopForCheckingData].Lat);
             // console.log(data.Vehicles[loopForCheckingData].Lon);
@@ -143,7 +146,7 @@ var loopForCheckingData, count = 0;
             
             markers.addLayer(marker);
             
-            
+            mymap.addLayer(markers);
 
             
             count++;
@@ -151,19 +154,25 @@ var loopForCheckingData, count = 0;
         
     }   
 
-    mymap.addLayer(markers);
+    
+
+} else {
+
+    console.log("no refresh");
+
+}
+    
+
+
+
     
 }
 
-async function repeatFunction(){
-    markers.clearLayers();
-    getData();
-}
 
 
 
 getData();
-setInterval(repeatFunction,5000);
+setInterval(getData,5000);
 
 </script>
 </body>
