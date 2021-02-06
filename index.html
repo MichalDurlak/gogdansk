@@ -18,7 +18,7 @@
 <body>
 <center>
     <h2> Aktualna pozycja komunikacji miejskiej w Gdańsku </h2>
-    test commit
+    
 
 
 </center>
@@ -116,18 +116,18 @@ var loopForCheckingData, count = 0;
             document.getElementById("lon").textContent = data.Vehicles[loopForCheckingData].Lon.toFixed(4);
             document.getElementById("gpsquality").textContent = data.Vehicles[loopForCheckingData].GPSQuality;
             
-            // console.log(data.Vehicles[loopForCheckingData].Line);
+            console.log(data.Vehicles[loopForCheckingData].Line);
             // console.log(data.Vehicles[loopForCheckingData].Speed);
             // console.log(data.Vehicles[loopForCheckingData].Lat);
             // console.log(data.Vehicles[loopForCheckingData].Lon);
             // console.log(data.Vehicles[loopForCheckingData].GPSQuality);
             
             
-            if (data.Vehicles[loopForCheckingData].Line > 106){
+            if (data.Vehicles[loopForCheckingData].Line >= 106){
                 var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: busIcon});
                 marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
 
-            } else if (data.Vehicles[loopForCheckingData].Line < 13){
+            } else if (data.Vehicles[loopForCheckingData].Line <= 12){
 
                 var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: tramIcon});
             marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
