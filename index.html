@@ -11,9 +11,11 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
 
 <link rel="stylesheet" href="style.css">
-    <title>Go Gdansk</title>
+    <title>GoGdańsk</title>
 </head>
 <body>
 <center>
@@ -23,13 +25,6 @@
 
 </center>
 
-<p>
-    Line: <span id="line"></span> <br />
-    Speed: <span id="speed"></span> <br />
-    Lat: <span id="lat"></span> <br />
-    Lon: <span id="lon"></span> <br />
-    GPSQuality: <span id="gpsquality"></span> <br />
-</p>
 
  <div id="gpsMap"></div>
 
@@ -68,28 +63,19 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 var busIcon = L.icon({
     iconUrl: 'models/bus.png',
     iconSize: [25, 25],
-    // iconAnchor: [22, 94],
-    popupAnchor: [0, -15],
-    // shadowSize: [68, 95],
-    // shadowAnchor: [22, 94]
+    popupAnchor: [0, -15]
 });
 
 var tramIcon = L.icon({
     iconUrl: 'models/tram.png',
     iconSize: [25, 25],
-    // iconAnchor: [22, 94],
-    popupAnchor: [0, -15],
-    // shadowSize: [68, 95],
-    // shadowAnchor: [22, 94]
+    popupAnchor: [0, -15]
 });
 
 var busnightIcon = L.icon({
     iconUrl: 'models/busnight.png',
     iconSize: [30, 30],
-    // iconAnchor: [22, 94],
-    popupAnchor: [0, -15],
-    // shadowSize: [68, 95],
-    // shadowAnchor: [22, 94]
+    popupAnchor: [0, -15]
 });
 
 
@@ -111,13 +97,7 @@ if (dataAndTimeLastData != data.LastUpdateData){
     for(loopForCheckingData in data.Vehicles) {        
         if(data.Vehicles.hasOwnProperty(loopForCheckingData)) {
             
-                      
-            
-            document.getElementById("line").textContent = data.Vehicles[loopForCheckingData].Line;
-            document.getElementById("speed").textContent = data.Vehicles[loopForCheckingData].Speed;
-            document.getElementById("lat").textContent = data.Vehicles[loopForCheckingData].Lat.toFixed(4);
-            document.getElementById("lon").textContent = data.Vehicles[loopForCheckingData].Lon.toFixed(4);
-            document.getElementById("gpsquality").textContent = data.Vehicles[loopForCheckingData].GPSQuality;
+    
             
             // console.log(data.Vehicles[loopForCheckingData].Line);
             // console.log(data.Vehicles[loopForCheckingData].Speed);
