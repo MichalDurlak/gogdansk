@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl">
-    
+<meta charset="UTF-8">
+
 <head>
-    <meta charset="UTF-8">
+    
+    <!-- MAP integration -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
@@ -11,159 +13,127 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
+
     <link rel="stylesheet" href="src/leaflet-gps.css" />
     
+    <!-- Fontawesome - Icons -->
+    <script src="https://kit.fontawesome.com/1d581ee8f8.js" crossorigin="anonymous"></script>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-<link rel="stylesheet" href="style.css">
+    <!-- My style css -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;1,500;1,600&display=swap" rel="stylesheet">
+    
+    
     <title>GoGdańsk</title>
+
 </head>
 <body>
-<center>
+
+
+
+<!-- CENTER LEFT -->
+<div class="leftSide">
+    <div class="menuBar">
+        <div class="title">
+            <h2> Go Gdańsk </h2>
+        </div>
+        
+
+        <ul>
+            <li> <a href="#"> <i class="fas fa-home"> <br><br> Strona Główna </i> </a> </li>
+            <li> <a href="#"> <i class="fas fa-map-marker-alt"> <br><br> Aktualna Pozycja </i> </a> </li>
+            <li> <a href="#"> <i class="fas fa-parking"> <br><br> Parking </i> </a> </li>
+            <li> <a href="#"> <i class="fas fa-mobile"> <br><br> Aplikacja </i> </a> </li>
+
+            
+
+        </ul>
+
+        <!-- <div class="socialMedia">
+            <a href="#"> <i class="fab fa-facebook-square"></i></a>
+            <a href="#"> <i class="fab fa-facebook-square"></i></a>
+            <a href="#"> <i class="fab fa-facebook-square"></i></a>
+    
+        </div> -->
+
+    </div>
+
+
+    
+</div>
+
+<!-- Main Content -->
+<div class="mainContent">
+<!-- CENTER TOP -->
+<div class="centerTop">
     <h2> Aktualna pozycja komunikacji miejskiej w Gdańsku </h2>
+</div>
+
+<!-- CENTER MID -->
+<div class="centerMid">
+    <div class="mapDiv">
+        <div id="gpsMap"></div>
+
+    </div>
+    
     
 
+    <div class="licenseDownloadingData">
+        <br>
+        Ostatnia aktualizacja: <span id="dataAndTimeOfTime"></span>
+        <br>
+        Źródło danych: <a href = "http://www.ztm.gda.pl/otwarty_ztm">Zarząd Transportu Miejskiego w Gdańsku</a>
 
-</center>
+    <br>
+    <li>Stworzono przez: Michał Durlak 2021</li>
+    </div>
+    
+    <!-- <div class="authorOfWebsite">
+        
+    </div> -->
+
+</div>
+
+<!-- BOTTOM -->
+</div>
 
 
- <div id="gpsMap"></div>
 
- <div id="licenseDownloadingData">
-     <br>
-     Ostatnia aktualizacja: <span id="dataAndTimeOfTime"></span>
-     <br>
-     Źródło danych: <a href = "http://www.ztm.gda.pl/otwarty_ztm">Zarząd Transportu Miejskiego w Gdańsku</a>
- </div>
 
- <div id="authorOfWebsite">
 
-      Stworzono przez: Michał Durlak 2021
 
- </div>
  
- <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+
+ 
+
+
+<!-- ???? -->
+<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+
+<!-- GPS localization -->
 <script src="src/leaflet-gps.js"></script>
 
-<script>
-
-const mymap = L.map('gpsMap').setView([54.3705, 18.6481], 12);
-// const marker = L.marker([54.3705, 18.6481]).addTo(mymap);
-var markers = L.layerGroup([]);
-var dataAndTimeLastData = null;
-
-mymap.addControl( new L.Control.Gps({marker: new L.Marker([0,0])}) );//inizialize control
-
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXhlbDA5IiwiYSI6ImNra3N5YWM2aTN1MHcydnF0cnBzZTFibDAifQ.lGv3Of7woAr35IlIVDKuIw', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'your.mapbox.access.token'
-}).addTo(mymap);
+<!-- My scripts -->
+<script src="scripts.js"></script>
 
 
 
 
-var busIcon = L.icon({
-    iconUrl: 'models/bus.png',
-    iconSize: [25, 25],
-    popupAnchor: [0, -15]
-});
-
-var tramIcon = L.icon({
-    iconUrl: 'models/tram.png',
-    iconSize: [25, 25],
-    popupAnchor: [0, -15]
-});
-
-var busnightIcon = L.icon({
-    iconUrl: 'models/busnight.png',
-    iconSize: [30, 30],
-    popupAnchor: [0, -15]
-});
 
 
-const gps_url = 'https://ckan2.multimediagdansk.pl/gpsPositions'
-
-
-async function getData(){
-    const response = await fetch(gps_url);
-    const data = await response.json();  
-    // console.log(data.LastUpdateData);
-    // console.log(data.Vehicles[2].Line);
-    document.getElementById("dataAndTimeOfTime").textContent = data.LastUpdateData;
-
-if (dataAndTimeLastData != data.LastUpdateData){
-    markers.clearLayers();
-    dataAndTimeLastData = data.LastUpdateData;
-
-    var loopForCheckingData, count = 0;
-    for(loopForCheckingData in data.Vehicles) {        
-        if(data.Vehicles.hasOwnProperty(loopForCheckingData)) {
-            
-    
-            
-            // console.log(data.Vehicles[loopForCheckingData].Line);
-            // console.log(data.Vehicles[loopForCheckingData].Speed);
-            // console.log(data.Vehicles[loopForCheckingData].Lat);
-            // console.log(data.Vehicles[loopForCheckingData].Lon);
-            // console.log(data.Vehicles[loopForCheckingData].GPSQuality);
-            
-            
-            if (data.Vehicles[loopForCheckingData].Line >= 106){
-                var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: busIcon});
-                marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
-
-            } else if (data.Vehicles[loopForCheckingData].Line <= 12){
-
-                var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: tramIcon});
-            marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
-
-            } else {
-
-                var marker = L.marker([data.Vehicles[loopForCheckingData].Lat, data.Vehicles[loopForCheckingData].Lon],{icon: busnightIcon});
-                marker.bindPopup("Line: "+data.Vehicles[loopForCheckingData].Line +"<br>"+"Speed: "+data.Vehicles[loopForCheckingData].Speed+"<br>"+"GPS Quality: "+data.Vehicles[loopForCheckingData].GPSQuality);
-
-
-            }
-            
-            
-            markers.addLayer(marker);
-            
-            mymap.addLayer(markers);
-
-            
-            count++;
-        }
-        
-    }   
-
-    
-
-} else {
-
-    console.log("no refresh");
-
-}
-    
-
-
-
-    
-}
-
-
-
-
-getData();
-setInterval(getData,5000);
-
-</script>
 </body>
 </html>
 
