@@ -1,87 +1,103 @@
-.mainContent{
-    
-    
-    background-color: blueviolet;
-    /* display: flex; */
-    position: absolute;
-    /* margin-left: 10rem; */
-    min-width: 100vw;
+
+/* html {
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+  }
+
+body {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    background-color: grey;
+  } */
+
+  
+  html, body { 
+    height: 100%
     
 }
 
+body{
+    color: white;
+    padding: 0;
+    margin: 0;
 
-
-
-.leftMenu{
-    background: blue;
-
-    width: 10rem;
-    min-height: 100vh;
-
-    position: absolute;
+    background-color: grey;
 }
 
-.leftMenu h2{
-    background: red;
-    padding: 0.875rem 1.25rem;
-    font-size: 1.2rem;
-}
-
-.center{
-    margin-left: 10rem;
-}
-
-.topContent h2{
-    background-color: coral;
-    min-height: 5vh;
-    padding: 0.875rem 1.25rem;
-    font-size: 1.2rem;
-
-    margin-bottom: 0px;
     
-}
 
-/* 
-.mapContent h2{
+  
+main {
     
     background-color: green;
-    margin-bottom: 0px;
-    position: fixed;
-    width: 100%;
-} */
 
-.bottomContent{
-    background-color: rgb(221, 37, 160);
+
+    height: calc(100% - 146px);
+
+
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     
-    min-height: 5vh;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    
-}
+    border-radius: 12px;
+  }
 
-
-.mapContent {
-    background-color: grey;
-    height: 87vh;
-   
-   
-
-
-}
-
-
-#gpsMap{
-          
+  #gpsMap{
+      
     height: 100%;
     
     
-    
 
-     /* border-radius: 10px;  */
-
-
+    border-radius: 12px;
 }
 
 
+footer {
+    /* position: absolute;
+    bottom: 0;
+    width: 100%;
+    
+    
+    text-align: center; */
+
+    width: 100%;
+    height: 70px;
+    color: black;
+    
+  }
+
+
+
+
+
+
+
+
+
+.lastUpdate{
+    text-align: left;
+
+}
+
+.license{
+    text-align: left;
+    position: relative;
+    
+    
+}
+
+.madeByMe{
+    
+    text-align: right;
+    
+    font-size: 10px;
+}
+
+
+
+
+
+  
