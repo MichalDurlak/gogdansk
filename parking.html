@@ -1,26 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="pl">
   <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- MAP integration -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
-
-    <link rel="stylesheet" href="src/leaflet-gps.css" />
-    
     <!-- Fontawesome - Icons -->
     <script src="https://kit.fontawesome.com/1d581ee8f8.js" crossorigin="anonymous"></script>
 
@@ -28,7 +16,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
     <!-- My style css -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style_parking.css">
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -48,7 +36,7 @@
 
 
 
-    <title>Hello, world!</title>
+    <title>Parking - GoGdansk.pl</title>
   </head>
   <body>
     
@@ -57,19 +45,19 @@
     <header>
 
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">GoGdańsk.pl</a>
+        <a class="navbar-brand" href="index.html">GoGdańsk.pl</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Strona główna <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="map.html">Aktualna Pozycja</a>
+            </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Strona główna <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Aktualna Pozycja</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="#">Parkingi</a>
             </li>
 
@@ -82,12 +70,89 @@
     
     <main>
       
-       
-     
 
-        <div id="gpsMap"></div>
+      <section>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                  <div class = "parkingSpot">
+                    <!-- id = 1 -->
+                    <h3> Galeria Bałtycka </h3> Wolne miejsca: <span id="1"> Pobieram dane... </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                  <div class = "parkingSpot">
+      <!-- id = 2 -->
+      <h3> C.H. Manhattan </h3> Wolne miejsca: <span id="2"> Pobieram dane... </span>
+              </div>
+            </div>
+              <div class="col-md-6 col-lg-4">
+      <!-- id = 3 -->
+      <div class = "parkingSpot">
+      <h3> PGE Arena </h3> Wolne miejsca: <span id="3"> Pobieram dane... </span>
+            </div>
+          </div>
+
+            <div class="col-md-6 col-lg-4">
+      <!-- id = 4 -->
+      <div class = "parkingSpot">
+      <h3> AmberExpo </h3> Wolne miejsca: <span id="4"> Pobieram dane... </span>
+          </div>
+        </div>
+          <div class="col-md-6 col-lg-4">
+      <!-- id = 5 -->
+      <div class = "parkingSpot">
+      <h3> C.H. Madison </h3> Wolne miejsca: <span id="5"> Pobieram dane... </span>
+        </div>
+      </div>
+
+        <div class="col-md-6 col-lg-4">
+      <!-- id = 7 -->
+      <div class = "parkingSpot">
+      <h3> Akademia Muzyczna </h3> Wolne miejsca: <span id="7"> Pobieram dane... </span>
+      </div>
+    </div>
+
+      <div class="col-md-6 col-lg-4">
+              <!-- id = 17 -->
+      <div class = "parkingSpot">
+        <h3> Forum Gdańsk </h3> Wolne miejsca: <span id="17"> Pobieram dane... </span>
+  
+    </div>
+  </div>
+
+
+
+    <div class="col-md-6 col-lg-4">
       
+      <!-- id = 15 -->
+      <div class = "parkingSpot">
+      <h3> ECH Metropolia </h3> Wolne miejsca: <span id="15"> Pobieram dane... </span>
+  
+</div>
+</div>
+
+
+  <div class="col-md-6 col-lg-4">
+
+            <!-- id = 14 -->
+            <div class = "parkingSpot">
+              <h3> Europejskie Centrum Solidarności </h3> Wolne miejsca: <span id="14"> Pobieram dane... </span>
+        
+</div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+      </section>
 
     </main>
 
@@ -95,12 +160,14 @@
 
       <footer class="footer">
         <div class="container">
+
           <div class="lastUpdate">
-            Ostatnia aktualizacja: <span id="dataAndTimeOfTime"></span>
+            Ostatnia aktualizacja: <span id="dataAndTimeOfTime"> Pobieram dane...</span>
           </div>
-         
-         <div class="license">
-          Źródło danych: Zarząd Transportu Miejskiego w Gdańsku
+
+          <div class="license">
+            Źródło danych: 
+          <a href="http://www.ztm.gda.pl/otwarty_ztm"> Zarząd Transportu Miejskiego w Gdańsku </a>
          </div> 
           
          <div class="madeByMe">
@@ -116,14 +183,8 @@
     
 
 
-      <!-- ???? -->
-<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
-
-<!-- GPS localization -->
-<script src="src/leaflet-gps.js"></script>
-
-<!-- My scripts -->
-<script src="scripts.js"></script>
+    <!-- My scripts -->
+    <script src="scripts/scripts_parking.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
